@@ -4,14 +4,20 @@ namespace Urbanproof\FakerIdents;
 
 use BadMethodCallException;
 use OutOfBoundsException;
-use RuntimeException;
 
 const TYPE_PERSON = 'person';
 const TYPE_COMPANY = 'company';
 const GENER_MALE = 'male';
 const GENER_FEMALE = 'female';
 
-function calculateCheckNumber(string $input, string $type): int
+/**
+ * @param string $input
+ * @param string $type
+ * @return int|string Returns integer for company idents, string for person idents
+ * @throws BadMethodCallException
+ * @throws OutOfBoundsException
+ */
+function calculateCheckNumber(string $input, string $type)
 {
     switch ($type) {
         case TYPE_COMPANY:
@@ -37,7 +43,17 @@ function calculateCheckNumber(string $input, string $type): int
                     return 11 - $check;
             }
         case TYPE_PERSON:
-            throw new RuntimeException('Person ident check number calculation is not implemented yet');
+            // We expect the input to be well-formatted ident, just without check character
+            if (mb_strlen($input) !== 10) {
+                throw new BadMethodCallException('Person ident must be exactly 10 numbers without the check character');
+            }
+            $input = mb_substr($input, 0, 6) . mb_substr($input, -3);
+            $checkChars = str_split('0123456789ABCDEFHJKLMNPRSTUVWXY');
+            $mod = (int)$input % 31;
+            if (!isset($checkChars[$mod])) {
+                throw new BadMethodCallException('Ill formatted person ident');
+            }
+            return $checkChars[$mod];
         default:
             throw new OutOfBoundsException('Unknown ident type.');
     }

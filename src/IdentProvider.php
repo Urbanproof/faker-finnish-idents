@@ -3,23 +3,39 @@
 namespace Urbanproof\FakerIdents;
 
 use BadMethodCallException;
+use DateTime as NativeDateTime;
 use Faker\Provider\Base;
-use RuntimeException;
+use Faker\Provider\DateTime;
 
 class IdentProvider extends Base
 {
     /**
-     * Generate random national identity number. Not implemented yet.
+     * Generate random national identity number
      *
      * @return string
      */
-    public static function personIdent(?string $gender = null): string
+    public static function personIdent(?NativeDateTime $date = null, ?string $gender = null): string
     {
-        throw new RuntimeException('Method not implemented yet');
+        do {
+            $birthdate = $date ?? DateTime::dateTime();
+            // born before 1.1.2000 => dash, born after 1.1.2000 => A
+            $separator = $birthdate->getTimestamp() < 946684800 ? '-' : 'A';
+            $birthdate = $birthdate->format('dmy');
+            $serial = mt_rand(2, 999); // serial distinguishes persons born in the same day
+            if (
+                ($gender === GENER_MALE && $serial % 2 !== 1) || // male serials must be odd
+                ($gender === GENER_FEMALE && $serial % 2 !== 0) // female serails must be even
+            ) {
+                $serial++;
+            }
+            $serial = str_pad($serial, 3, '0', STR_PAD_LEFT); // ensure three-digit serial
+            $check = calculateCheckNumber($birthdate . $separator . $serial, TYPE_PERSON);
+        } while ($check === false);
+        return $birthdate . $separator . $serial . $check;
     }
 
     /**
-     * Generate random business id.
+     * Generate random business id
      *
      * @return string
      */

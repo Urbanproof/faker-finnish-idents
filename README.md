@@ -3,7 +3,7 @@
 
 ## TODO:
 - publish package
-- add national id generator
+- write tests for person idents
 
 ## Installation
 
@@ -26,4 +26,18 @@ $faker->addProvider(new Urbanproof\FakerIdents\IdentProvider($faker));
 ### Generate business id
 ```php
 echo $faker->companyIdent; // => "5235981-6"
+```
+
+### Generate national id
+```php
+echo $faker->personIdent; // => "170379-921F"
+```
+
+```php
+echo $faker->personIdent(DateTime::createFromFormat('d.m.Y', '01.01.2000'); // => "010100A3967"
+```
+
+```php
+use const Urbanproof\FakerIdents\GENER_MALE;
+echo $faker->personIdent(DateTime::createFromFormat('d.m.Y', '31.12.1999'), GENER_MALE); // => "311299-4059"
 ```
