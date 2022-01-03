@@ -1,10 +1,47 @@
 <?php
 
 use function Urbanproof\FakerIdents\calculateCheckNumber;
-use const Urbanproof\FakerIdents\TYPE_COMPANY;
+use const Urbanproof\FakerIdents\{TYPE_COMPANY, TYPE_PERSON};
+
+#region Verify with valid person idents
+it('ceates correct check numbers for persons', function (string $input, string $correctCheck): void {
+    $calculatedCheck = calculateCheckNumber($input, TYPE_PERSON);
+    expect($calculatedCheck)->toEqual($correctCheck)->not->toThrow(Exception::class);
+})->with([
+    ['201168-336', '5'],
+    ['190616-406', 'A'],
+    ['140980-186', 'X'],
+    ['080740-041', 'E'],
+    ['170106-886', 'W'],
+    ['041115-471', 'H'],
+    ['281190-779', '9'],
+    ['070862-886', 'J'],
+    ['060306-879', '6'],
+    ['230220-448', '2'],
+    ['170776-468', 'A'],
+    ['100674-529', 'E'],
+    ['240950-432', 'K'],
+    ['020669-377', '3'],
+    ['010735-238', '0'],
+    ['131154-022', 'W'],
+    ['050261-645', 'C'],
+    ['171191-119', '5'],
+    ['200544-893', '3'],
+    ['070283-095', 'L'],
+    ['080698-778', 'C'],
+    ['210459-232', 'F'],
+    ['250858-141', '3'],
+    ['130986-386', '9'],
+    ['010542-199', 'X'],
+    ['020423-022', '5'],
+    ['020686-074', 'P'],
+    ['040528-231', '9'],
+    ['290980-625', 'S'],
+    ['050845-247', '8'],
+]);
+#endregion
 
 #region Verify with valid company idents
-
 it('ceates correct check numbers for companies', function (string $input, int $correctCheck): void {
     $calculatedCheck = calculateCheckNumber($input, TYPE_COMPANY);
     expect($calculatedCheck)->toEqual($correctCheck)->not->toThrow(Exception::class);
@@ -60,7 +97,6 @@ it('ceates correct check numbers for companies', function (string $input, int $c
     ['1446765', 6],
     ['4544715', 6],
 ]);
-
 #endregion
 
 
