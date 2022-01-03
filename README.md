@@ -1,5 +1,6 @@
 # Faker provider for finnish national id's & business id's
 
+![Build status](https://github.com/Urbanproof/faker-finnish-idents/actions/workflows/php.yml/badge.svg?branch=master)
 
 ## Installation
 
