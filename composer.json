@@ -3,6 +3,12 @@
     "description": "FakerPHP Provider for Finnish national identity numbers & business ids",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "faker",
+        "business-id",
+        "y-tunnus",
+        "fake-ident"
+    ],
     "autoload": {
         "psr-4": {
             "Urbanproof\\FakerIdents\\": "src/"
