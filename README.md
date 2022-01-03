@@ -1,10 +1,6 @@
 # Faker provider for finnish national id's & business id's
 
 
-## TODO:
-- publish package
-- write tests for person idents
-
 ## Installation
 
 ```sh
