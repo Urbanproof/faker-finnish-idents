@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<ruleset name="PHPCS Configuration">
+
+    <arg name="extensions" value="php"/>
+    <arg value="-colors"/>
+    <arg value="psv"/>
+
+    <file>src/</file>
+
+    <rule ref="PSR12"/>
+</ruleset>
